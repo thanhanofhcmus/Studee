@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const controller = require('../controllers/courses');
 
-/* GET Course home page. */
-router.get('/', (req, res) => {
-  res.render('course/courses', { title: 'Các khoá học' });
-});
+router.get('/', controller.list);
 
 router.get('/course-details', (req, res) => {
   res.render('course/course-details', { title: 'Chi tiết khoá học' });
