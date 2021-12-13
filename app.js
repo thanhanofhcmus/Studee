@@ -9,6 +9,33 @@ const usersRouter = require('./routes/users');
 const courseRouter = require('./routes/course');
 
 const app = express();
+const mysql = require('mysql');
+
+const con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'happy2code',
+  database: 'CNPMDB'
+});
+
+con.connect(function (err) {
+  if (err) throw err;
+  const sql = 'SELECT * FROM Course';
+  console.log('Connected!!!');
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result);
+  });
+});
+
+// app.get('/home.html', function (req, res) {
+//   const sql = 'SELECT * FROM Course';
+//   con.query(sql, function (err, result) {
+//     if (err) throw err;
+//     console.log(result);
+//     res.send(result);
+//   });
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
