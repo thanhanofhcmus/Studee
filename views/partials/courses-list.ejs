@@ -1,0 +1,54 @@
+<section class="meetings-page" id="meetings">
+</title>
+    <div class="container">
+      <div class="row">
+      <% if (typeof coursesName != 'undefined') { %>
+        <div class="text-center text-white fs-2 fw-bold text-uppercase mb-5"><%= coursesName %></div>
+      <% }%>
+        <div class="col-lg-12">
+          <div class="filters">
+            <ul>
+              <li data-filter="*" class="active">All Meetings</li>
+              <li data-filter=".soon">Soon</li>
+              <li data-filter=".imp">Important</li>
+              <li data-filter=".att">Attractive</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+          <div class="row grid">
+            <% courses.forEach(function(course) { %>
+              <div class="col-lg-4 templatemo-item-col all <%= course.tag %> ">
+                <div class="meeting-item">
+                  <div class="thumb">
+                    <div class="price"><span>$<%= course.price %></span></div>
+                    <a href=<%=course.link %> ><img src=<%=course.imageLink %> alt=""></a>
+                  </div>
+                  <div class="down-content">
+                    <div class="date"><h6><%= course.month %> <span><%= course.startDate.getDate() %></span></h6></div>
+                    <a href=<%=course.link %> ><h4><%= course.title %></h4></a>
+                    <p><%= course.desc %></p>
+                    <p><b><%= course.formattedStartTime %> - <%= course.formattedEndTime %></b></p>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+          <div class="pagination">
+            <ul>
+              <li><a href="#">1</a></li>
+              <li class="active"><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
