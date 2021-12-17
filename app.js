@@ -3,39 +3,16 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require('express-session');
+const flash = require('connect-flash');
 
+const con = require('./models/database');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const courseRouter = require('./routes/course');
+const authRouter = require('./routes/auth');
 
 const app = express();
-const mysql = require('mysql');
-
-const con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'happy2code',
-  database: 'CNPMDB'
-});
-
-con.connect(function (err) {
-  if (err) throw err;
-  const sql = 'SELECT * FROM Course';
-  console.log('Connected!!!');
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log(result);
-  });
-});
-
-// app.get('/home.html', function (req, res) {
-//   const sql = 'SELECT * FROM Course';
-//   con.query(sql, function (err, result) {
-//     if (err) throw err;
-//     console.log(result);
-//     res.send(result);
-//   });
-// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -44,12 +21,23 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: 'yash is a super star',
+  cookie: { secure: false, maxAge: 14400000 }
+})
+);
+app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/courses', courseRouter);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

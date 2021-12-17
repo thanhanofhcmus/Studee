@@ -4,8 +4,6 @@ const controller = require('../controllers/courses');
 
 router.get('/', controller.list);
 
-router.get('/course-details', (req, res) => {
-  res.render('course/course-details', { title: 'Chi tiết khoá học' });
-});
+router.get('/course-details', controller.courseDetails);
 
 module.exports = router;
