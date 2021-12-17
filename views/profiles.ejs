@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <%- include('partials/meta'); %>
+    <style>
+      .center {
+        margin: 10px;
+        width: 70%;
+        padding: 2px;
+      }
+    </style>
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+    <section class="heading-page header-text" id="top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>Hồ sơ cá nhân</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="meetings-page">
+      <div class="container-sm">
+        <div class="d-grid gap-2 col-9 mx-auto">
+          <div class="w-50 p-3">
+            <img class="rounded-circle mb-3"
+              src="https://imgt.taimienphi.vn/cf/Images/tt/2021/8/17/hinh-nen-vit-avatar-anh-vit-cute-ngoc-nghech-2.jpg"
+              alt="user-image">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="wrapper">
+              <h4 class="text-white ">Họ tên:</h4>
+              <div class="card border-primary mb-3">
+                <div class="card-body ">
+                  <h3>
+                    <%= profiles.name %>
+                  </h3>
+                </div>
+              </div>
+              <h4 class="text-white">Ngày, tháng, năm sinh:</h4>
+              <div class='card border-primary mb-3'>
+                <div class="card-body">
+                  <h3>
+                    <%= profiles.dob %>
+                  </h3>
+                </div>
+              </div>
+              <h4 class="text-white">Giới tính:</h4>
+              <div class='card border-primary mb-3'>
+                <div class="card-body">
+                  <h3>
+                    <%= profiles.gender %>
+                  </h3>
+                </div>
+              </div>
+              <h4 class="text-white">Email:</h4>
+              <div class='card border-primary mb-3'>
+                <div class="card-body">
+                  <h3>
+                    <%= profiles.email %>
+                  </h3>
+                </div>
+              </div>
+              <h4 class="text-white">Điện thoại:</h4>
+              <div class='card border-primary mb-3'>
+                <div class="card-body">
+                  <h3>
+                    <%= profiles.phone %>
+                  </h3>
+                </div>
+              </div>
+              <h4 class="text-white">Nơi công tác:</h4>
+              <div class='card border-primary mb-5'>
+                <div class="card-body">
+                  <h3>
+                    <%= profiles.workplace %>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="heading-page header-text" id="top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <h2>CÁC KHÓA HỌC</h2>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="d-grid gap-2 col-6 mx-auto mb-5">
+        <div class="card p-3">
+          <div class="card-img-top d-flex align-items-center bg-light">
+            <div>
+              <img class="rounded-circle mb-3"
+                src="https://imgt.taimienphi.vn/cf/Images/tt/2021/8/17/hinh-nen-vit-avatar-anh-vit-cute-ngoc-nghech-2.jpg"
+                alt="user-image">
+            </div>
+            <div class="col p-2">
+              <h5>
+                <%= profiles.name %>
+              </h5>
+              <h7>
+                <%= profiles.workplace %>
+              </h7>
+              <h7>
+                <%= profiles.email %>
+              </h7>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="container">
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button class="btn btn-primary m-3" type="button"><h3>Tạo khóa học mới</h3></button>
+        </div>
+        <% profiles.courses.forEach(function(course){ %>
+          <div class="d-grid gap-2 d-md-block">
+            <div class="meeting-item">
+              <div class="thumb">
+                <div class="price">
+                  <span>$<%= course.price %></span>
+                </div>
+                <a href=<%=course.link %> ><img src=<%=course.imageLink %> alt=""></a>
+              </div>
+              <div class="down-content">
+                <div class="date">
+                  <h6>
+                    <%= course.month %> <span>
+                        <%= course.date.getDate() %>
+                      </span>
+                  </h6>
+                </div>
+                <a href=<%=course.link %> >
+                  <h4>
+                    <%= course.title %>
+                  </h4>
+                </a>
+                <p>
+                  <%= course.desc %>
+                </p>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+      </div>
+      <%- include('partials/footer'); %>
+    </section>
+
+
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/js/isotope.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/lightbox.js"></script>
+    <script src="assets/js/tabs.js"></script>
+    <script src="assets/js/isotope.js"></script>
+    <script src="assets/js/video.js"></script>
+    <script src="assets/js/slick-slider.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script>
+      //according to loftblog tut
+      $('.nav li:first').addClass('active');
+
+      var showSection = function showSection(section, isAnimate) {
+        var
+          direction = section.replace(/#/, ''),
+          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+          reqSectionPos = reqSection.offset().top - 0;
+
+        if (isAnimate) {
+          $('body, html').animate({
+            scrollTop: reqSectionPos
+          },
+            800);
+        } else {
+          $('body, html').scrollTop(reqSectionPos);
+        }
+
+      };
+
+      var checkSection = function checkSection() {
+        $('.section').each(function () {
+          var
+            $this = $(this),
+            topEdge = $this.offset().top - 80,
+            bottomEdge = topEdge + $this.height(),
+            wScroll = $(window).scrollTop();
+          if (topEdge < wScroll && bottomEdge > wScroll) {
+            var
+              currentId = $this.data('section'),
+              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+            reqLink.closest('li').addClass('active').
+              siblings().removeClass('active');
+          }
+        });
+      };
+
+      $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+        e.preventDefault();
+        showSection($(this).attr('href'), true);
+      });
+
+      $(window).scroll(function () {
+        checkSection();
+      });
+    </script>
+</body>
+
+</body>
+
+</html>
