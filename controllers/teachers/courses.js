@@ -2,7 +2,8 @@ const coursesModel = require('../../models/courses');
 const teachersModel = require('../../models/teachers');
 
 module.exports.create = (req, res) => {
-  res.render('teachers/courses/creator');
+  const teacher = teachersModel.findById(res.locals.teacherId);
+  res.render('teachers/courses/creator', { teacher });
 };
 
 module.exports.update = (req, res) => {

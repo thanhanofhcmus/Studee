@@ -12,4 +12,8 @@ router.get('/list', controller.list);
 
 router.get('/detail/:id', controller.detail);
 
+router.post('/create', (req, res) => {
+  res.send(req.body);
+});
+
 module.exports = router;
