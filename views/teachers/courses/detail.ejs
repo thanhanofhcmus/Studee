@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../../partials/meta'); %>
+
+<body>
+
+  <%- include('../../partials/header'); %>
+
+  <section class="meetings-page" id="meetings">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="meeting-single-item">
+                <div class="thumb">
+                  <a href="/courses/course-details"><img src="/assets/images/single-meeting.jpg" alt=""></a>
+                </div>
+                <div class="down-content">
+                  <a class="text-black" href="/courses/course-details"><h2><%= course.title %></h2> </a>
+                  <p class="description"><%= course.desc %></p>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="hours">
+                        <h5>Thời gian dạy</h5>
+                        <p><b>Bắt đầu:  </b><%= course.startDate.toString() %></p>
+                        <p><b>Bắt đầu:  </b><%= course.formattedStartTime %></p>
+                        <p><b>Kết thúc: </b><%= course.formattedEndTime %></p>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="book now">
+                        <h5>Giáo Viên</h5>
+                        <p><b>Tên: </b> <%= teacher.firstName %> <%= teacher.lastName %> </p>
+                        <p><b>Email: </b> <%= teacher.email %> </p>
+                        <p><b>Phone: </b> <%= teacher.phoneNumber %> </p>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="main-button-red mt-5 d-flex justify-content-around border-top">
+                        <a href="">Sửa khóa học</a>
+                        <a href="/teachers/courses/delete/<%=course.id %>">Xóa khóa học</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- include('../../partials/footer'); %>
+
+  </body>
+
+</html>

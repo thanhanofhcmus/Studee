@@ -11,141 +11,23 @@
 
   <%- include('../partials/header'); %>
 
-    <section class="heading-page header-text" id="top">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <h6>Here are our upcoming meetings</h6>
-            <h2>Upcoming Meetings</h2>
-          </div>
+  <section class="heading-page header-text" id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h6>Here are our upcoming meetings</h6>
+          <h2>Upcoming Meetings</h2>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
 
-    <section class="meetings-page" id="meetings">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="filters">
-                  <ul>
-                    <li data-filter="*" class="active">All Meetings</li>
-                    <li data-filter=".soon">Soon</li>
-                    <li data-filter=".imp">Important</li>
-                    <li data-filter=".att">Attractive</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="row grid">
+  <%- include('../partials/courses-list'); %>
+    
 
-                    <% courses.forEach(function(course) { %>
-                      <div class="col-lg-4 templatemo-item-col all <%= course.tag %> ">
-                        <div class="meeting-item">
-                          <div class="thumb">
-                            <div class="price">
-                              <span>$<%= course.price %></span>
-                            </div>
-                            <a href= <%= course.link %> ><img src=<%= course.imageLink %>  alt=""></a>
-                          </div>
-                          <div class="down-content">
-                            <div class="date">
-                              <h6><%= course.month %> <span><%= course.date.getDate() %></span></h6>
-                            </div>
-                            <a href= <%= course.link %> >
-                              <h4> <%= course.title %> </h4>
-                            </a>
-                            <p> <%= course.desc %> </p>
-                          </div>
-                        </div>
-                      </div>
-                    <% }); %>
-
-                </div>
-              </div>
-              <div class="col-lg-12">
-                <div class="pagination">
-                  <ul>
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <%- include('../partials/footer'); %>
-    </section>
-
-
-    <!-- Scripts -->
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <script src="assets/js/isotope.min.js"></script>
-    <script src="assets/js/owl-carousel.js"></script>
-    <script src="assets/js/lightbox.js"></script>
-    <script src="assets/js/tabs.js"></script>
-    <script src="assets/js/isotope.js"></script>
-    <script src="assets/js/video.js"></script>
-    <script src="assets/js/slick-slider.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <script>
-      //according to loftblog tut
-      $('.nav li:first').addClass('active');
-
-      var showSection = function showSection(section, isAnimate) {
-        var
-          direction = section.replace(/#/, ''),
-          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-          reqSectionPos = reqSection.offset().top - 0;
-
-        if (isAnimate) {
-          $('body, html').animate({
-            scrollTop: reqSectionPos
-          },
-            800);
-        } else {
-          $('body, html').scrollTop(reqSectionPos);
-        }
-
-      };
-
-      var checkSection = function checkSection() {
-        $('.section').each(function () {
-          var
-            $this = $(this),
-            topEdge = $this.offset().top - 80,
-            bottomEdge = topEdge + $this.height(),
-            wScroll = $(window).scrollTop();
-          if (topEdge < wScroll && bottomEdge > wScroll) {
-            var
-              currentId = $this.data('section'),
-              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-            reqLink.closest('li').addClass('active').
-              siblings().removeClass('active');
-          }
-        });
-      };
-
-      $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-        e.preventDefault();
-        showSection($(this).attr('href'), true);
-      });
-
-      $(window).scroll(function () {
-        checkSection();
-      });
-    </script>
-</body>
-
-
+  <%- include('../partials/footer'); %>
+  
 </body>
 
 </html>
