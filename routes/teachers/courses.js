@@ -2,7 +2,7 @@ const router = require('express').Router();
 const controller = require('../../controllers/teachers/courses');
 
 router.get('/', (req, res) => {
-  res.send('Welcome Teacher/Courses id: ' + res.locals.teacherId);
+  res.send('Welcome Teacher/Courses id: ' + req.session.user.id);
 });
 
 router.get('/create', controller.create);
