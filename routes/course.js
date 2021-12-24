@@ -4,6 +4,7 @@ const controller = require('../controllers/courses');
 const teacherRouter = require('./teachers/courses');
 
 router.get('/', controller.list);
+router.get('/list', controller.list);
 
 router.get('/course-details', controller.courseDetails);
 

@@ -1,12 +1,7 @@
 const coursesRouter = require('./courses');
 const router = require('express').Router();
+const teacherChecker = require('../../middleware/teacherChecker');
 
-const handleId = (req, res, next) => {
-  // res.locals.teacherId = req.params.id;
-  res.locals.teacherId = 'TCH1';
-  next();
-};
-
-router.use('/courses', handleId, coursesRouter);
+router.use('/courses', teacherChecker, coursesRouter);
 
 module.exports = router;

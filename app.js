@@ -5,6 +5,7 @@ const logger = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
 
+const userMiddleware = require('./middleware/user');
 const errorMiddleware = require('./middleware/error');
 
 const indexRouter = require('./routes/index');
@@ -30,11 +31,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: 'yash is a super star',
+  secret: process.env.SESSION_SECRET,
   cookie: { secure: false, maxAge: 14400000 }
-})
-);
+}));
 app.use(flash());
+
+app.use(userMiddleware);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
