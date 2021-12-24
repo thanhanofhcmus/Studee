@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <%- include('../partials/meta'); %>
+
+</head>
+
+<body>
+
+  <%- include('../partials/header') %>
+  
+  <section class="contact-us" id="contact">
+    <div class="container-sm">
+      <div class="row justify-content-center">
+        <div class="col-lg-9 align-self-center">
+          <div id="contact">
+            <form id="contact" action="/profiles/update" method="post">
+            <div class="row text-center"><h2 class="mb-2">Chỉnh sửa hồ sơ cá nhân</h2></div>
+            <div class="row">
+              <fieldset>
+                <img src="https://tretrau.vn/wp-content/uploads/stm_lms_avatars/stm_lms_avatar1.jpeg?v=1621136816" alt="tretrau" style= "height: 50%; width: 50%; margin-left: 25%; margin-right: auto;" class="center">
+              </fieldset>
+              <fieldset>
+                <label for="fname"><b>Họ:       </b></label>
+                <input name="fname" type="text" id="fname" required="" placeholder="<%= student.firstName       %>">
+              </fieldset>
+              <fieldset>
+                <label for="lname"><b>Tên:       </b></label>
+                <input name="lname" type="text" id="lname" required="" placeholder="<%= student.lastName       %>">
+              </fieldset>
+            </div>
+            <div class="row">
+              <fieldset>
+                <label for="dob"><b>Ngày sinh:       </b></label>
+                <input name="date" type="date" id="dob" required="" placeholder="<%= student.dob       %>">
+              </fieldset>
+            </div>
+            <div class="row">
+              <fieldset>
+                <label for="gender"><b>Giới tính:       </b></label>
+                <input name="gender" type="text" id="gender" required="" placeholder="<%= student.gender       %>">
+              </fieldset>
+            </div>
+            <div class="row">
+              <fieldset>
+                <label for="email"><b>Email:       </b></label>
+                <input name="email" type="email" id="email" pattern="[^ @]*@[^ @]*" required="" placeholder="<%= student.email       %>">
+              </fieldset>
+            </div>
+            <div class="row">
+              <fieldset>
+                <label for="phone"><b>Số điện thoại:       </b></label>
+                <input name="phone" type="text" id="phone" required="" placeholder="<%= student.phoneNumber       %>">
+              </fieldset>
+            </div>
+            <div class="row">
+              <fieldset>
+                <label for="place"><b>Nơi công tác:       </b></label>
+                <input name="place" type="text" id="place" required="" placeholder="<%= student.workplace       %>">
+              </fieldset>
+            </div>
+            <div class="col-lg-12">
+              <fieldset>
+                <button type="submit" id="form-submit" class="button">Lưu</button>
+              </fieldset>
+            </div>
+          </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- include('../partials/footer'); %>
+
+  
+</body>
+
+</html>
