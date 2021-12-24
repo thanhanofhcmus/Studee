@@ -2,11 +2,14 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+
 const logger = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
+const expressValidator = require('express-validator');
 
-const con = require('./models/database');
+// const con = require('./models/database');
+const config = require('./models/azure');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const courseRouter = require('./routes/course');
@@ -33,6 +36,7 @@ app.use(session({
 })
 );
 app.use(flash());
+app.use(expressValidator());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

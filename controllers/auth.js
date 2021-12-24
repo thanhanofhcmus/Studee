@@ -51,7 +51,7 @@ const signupPost = async (req, res) => {
     con.query('INSERT INTO User SET ?', user, function (err, result) {
       if (err) {
         req.flash('error', err);
-        res.render('auth/signup', { title: 'Đăng kí', username: '', password: '', password2: '' });
+        // res.render('auth/signup', { title: 'Đăng kí', username: '', password: '', password2: '' });
       } else {
         req.flash('success', 'Bạn đã đăng kí tài khoản thành công!');
         res.redirect('/auth/login');
