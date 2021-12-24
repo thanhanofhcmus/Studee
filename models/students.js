@@ -1,14 +1,16 @@
 const data = {
-  id: 'std00001',
-  name: 'Bùi Nguyên Nghĩa',
+  id: 'STD1',
+  lastName: 'Nghĩa',
+  firstName: 'Bùi',
   dob: '09/02/2001',
-  gender: 'Male',
+  gender: true,
   email: '19120600@student.hcmus.edu.vn',
-  phone: '0353049456',
+  phoneNumber: '0353049456',
   workplace: 'FIT@HCMUS',
+  courses: ['C01', 'C02', 'C03'],
   descripsion: '..................',
-  courses: ['C01', 'C02', 'C03']
-
+  username: 'anhyeuem',
+  password: '123456'
 };
 
 module.exports = data;
