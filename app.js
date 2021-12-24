@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: 'yash is a super star',
+  secret: process.env.SESSION_SECRET,
   cookie: { secure: false, maxAge: 14400000 }
 })
 );
