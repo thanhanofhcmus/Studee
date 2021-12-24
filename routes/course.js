@@ -5,9 +5,7 @@ const teacherRouter = require('./teachers/courses');
 
 router.get('/', controller.list);
 
-router.get('/course-details', (_req, res) => {
-  res.render('course/course-details', { title: 'Chi tiết khoá học' });
-});
+router.get('/course-details', controller.courseDetails);
 
 router.use('/teacher', teacherRouter);
 
