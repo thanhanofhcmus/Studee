@@ -1,9 +1,11 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+
 const logger = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
+const expressValidator = require('express-validator');
 
 const userMiddleware = require('./middleware/user');
 const errorMiddleware = require('./middleware/error');
@@ -35,6 +37,7 @@ app.use(session({
   cookie: { secure: false, maxAge: 14400000 }
 }));
 app.use(flash());
+app.use(expressValidator());
 
 app.use(userMiddleware);
 
