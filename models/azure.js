@@ -1,13 +1,13 @@
 const { Connection, Request } = require('tedious');
-
+const con = require('../config')
 let connection = null;
 
 // Create connection to database
 const config = {
   authentication: {
     options: {
-      userName: 'studee',
-      password: '6p8xfiR5FqmdJbhD'
+      userName: con.AZURE_USERNAME,
+      password: con.AZURE_PASSWORD
     },
     type: 'default'
   },
