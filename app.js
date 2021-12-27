@@ -48,6 +48,12 @@ app.use('/courses', courseRouter);
 app.use('/profile', profileRouter);
 app.use('/auth', authRouter);
 
+const db = require('./models/azure');
+app.get('/test', (req, res) => {
+  db.queryDatabase();
+  res.send('test');
+});
+
 app.use(errorMiddleware.notFound);
 app.use(errorMiddleware.error);
 

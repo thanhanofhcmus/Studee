@@ -8,6 +8,9 @@ require('dotenv').config();
 const app = require('../app');
 const debug = require('debug')('studee:server');
 const http = require('http');
+const database = require('../models/azure');
+
+database.initDatabase();
 
 /**
  * Get port from environment and store in Express.

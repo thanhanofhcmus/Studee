@@ -1,64 +1,34 @@
 const { Connection, Request } = require('tedious');
 
+let connection = null;
+
 // Create connection to database
 const config = {
   authentication: {
     options: {
-      userName: 'studee', // update me
-      password: '6p8xfiR5FqmdJbhD' // update me
+      userName: 'studee',
+      password: '6p8xfiR5FqmdJbhD'
     },
     type: 'default'
   },
-  server: 'studee.database.windows.net', // update me
+  server: 'studee.database.windows.net',
   options: {
-    database: 'N12-NMCNPM', // update me
+    database: 'N12-NMCNPM',
     encrypt: true
   }
 };
 
-/*
-    //Use Azure VM Managed Identity to connect to the SQL database
-    const config = {
-        server: process.env["db_server"],
-        authentication: {
-            type: 'azure-active-directory-msi-vm',
-        },
-        options: {
-            database: process.env["db_database"],
-            encrypt: true,
-            port: 1433
-        }
-    };
+const initDatabase = () => {
+  connection = new Connection(config);
 
-    //Use Azure App Service Managed Identity to connect to the SQL database
-    const config = {
-        server: process.env["db_server"],
-        authentication: {
-            type: 'azure-active-directory-msi-app-service',
-        },
-        options: {
-            database: process.env["db_database"],
-            encrypt: true,
-            port: 1433
-        }
-    });
+  connection.connect(err => {
+    if (err) {
+      console.error(err);
+    }
+  });
+};
 
-*/
-
-const connection = new Connection(config);
-
-// Attempt to connect and execute queries if connection goes through
-connection.on('connect', err => {
-  if (err) {
-    console.error(err.message);
-  } else {
-    queryDatabase();
-  }
-});
-
-connection.connect();
-
-function queryDatabase() {
+const queryDatabase = () => {
   console.log('Reading rows from the Table...');
 
   // Read all rows from table
@@ -74,12 +44,15 @@ function queryDatabase() {
   );
 
   request.on('row', columns => {
-    columns.forEach(column => {
-      console.log('%s\t%s', column.metadata.colName, column.value);
+    columns.forEach(({ metadata, value }) => {
+      console.log(`${metadata.colName} : ${value}`);
     });
   });
 
   connection.execSql(request);
-}
+};
 
-module.exports = config;
+module.exports = {
+  initDatabase,
+  queryDatabase
+};
