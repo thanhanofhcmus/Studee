@@ -32,13 +32,27 @@
 
       <div>
 
-        <button @click='createRoom'>
+        <button v-if="!roomId" class='button is-primary'  @click='createRoom'>
           Tạo Room
         </button>
 
-        <button @click='joinRoom'>
+        <button v-if="!roomId" class='button is-info' @click='joinRoom'>
           Join Room
         </button>
+
+        <button v-if="roomId" class='button is-info' @click='publishVideo(true)'>
+          Share Screen
+        </button>
+
+        <div v-if="roomId">
+          <p>
+            Bạn có thể gởi link này để mời người khác 
+            <a v-bind:href="roomUrl" target="_blank">{{roomUrl}}</a>
+          </p>
+          <p>
+            <strong> Room ID: </strong> {{roomId}}
+          </p>
+        </div>
 
       </div>
     </div>

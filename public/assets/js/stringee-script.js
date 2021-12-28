@@ -9,8 +9,21 @@ const vm = new Vue({
     room: undefined,
     client: undefined
   },
+  computed: {
+    roomUrl: function () {
+      return `https://${location.hostname}?room=${this.roomId}`;
+    }
+  },
   mounted() {
     api.setRestToken();
+
+    const urlParams = new URLSearchParams(location.search);
+    const roomId = urlParams.get('room');
+
+    if (roomId) {
+      this.roomId = roomId;
+      this.joinRoom();
+    }
   },
   methods: {
     login: function () {
@@ -29,10 +42,11 @@ const vm = new Vue({
         this.client = client;
       });
     },
-    publishVideo: async function () {
+    publishVideo: async function (shareScreen = false) {
       const localTrack = await StringeeVideo.createLocalVideoTrack(this.client, {
         audio: true,
         video: true,
+        screen: shareScreen,
         videoDimensions: { width: 640, height: 360 }
       });
 
@@ -45,19 +59,24 @@ const vm = new Vue({
 
       this.room = room;
       room.clearAllOnMethos();
-      room.on('addtrack', async (even) => {
+      room.on('addtrack', async (event) => {
         const trackInfo = event.info.track;
 
         if (trackInfo.serverId === localTrack.serverId) {
           return;
         }
-
-        const track = await room.subscribe(trackInfo.serverId);
-        track.on('ready', () => {
-          const ele = localTrack.attach();
-          videoContainer.appendChild(ele);
-        });
+        this.subcribeTrack(trackInfo);
       });
+      room.on('removetrack', (event) => {
+        if (!event.track) {
+          return;
+        }
+
+        const elements = event.track.detach();
+        elements.forEach(element => element.remove());
+      });
+
+      roomData.listTracksInfo.forEach(trackInfo => this.subcribeTrack(trackInfo));
 
       room.publish(localTrack);
     },
@@ -72,18 +91,34 @@ const vm = new Vue({
       await this.login();
       await this.publishVideo();
     },
-    joinRoom: async function () {
-      const roomId = prompt('Enter room ID');
-      if (!roomId) {
-        return;
+    joinRoom: async function (showPrompt = false) {
+      if (showPrompt) {
+        const roomId = prompt('Dán Room ID vào đây');
+        if (!roomId) {
+          return;
+        }
+        this.roomId = roomId;
       }
 
-      const roomToken = await api.getRoomToken(roomId);
-      this.roomId = roomId;
+      const roomToken = await api.getRoomToken(this.roomId);
+
       this.roomToken = roomToken;
 
       await this.login();
       await this.publishVideo();
+    },
+    subcribeTrack: async function (trackInfo) {
+      const track = await this.room.subscribe(trackInfo.serverId);
+      track.on('ready', () => {
+        const ele = track.attach();
+        this.addVideo(ele);
+        videoContainer.appendChild(ele);
+      });
+    },
+    addVideo: function (videoElement) {
+      videoElement.setAttribute('controls', true);
+      videoElement.setAttribute('playsinline', true);
+      videoContainer.appendChild(videoElement);
     }
   }
 });
