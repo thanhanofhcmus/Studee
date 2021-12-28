@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Clone Zoom với Stringee hihi</title>
+
+    <!-- import the webpage's stylesheet -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="/assets/css/stringee.css" />
+
+    <!-- import the webpage's javascript file -->
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>
+    <script src="https://cdn.stringee.com/sdk/web/2.2.1/stringee-web-sdk.min.js"></script>
+    
+  </head>
+  <body>
+    <div class="container has-text-centered" id="app">
+      <h1 class="title">
+        Ứng dụng Clone Zoom cực cool ngầu với
+        <span class="header-highlight">Stringee API</span>
+      </h1>  
+      
+      <span>{{roomId}} {{roomToken}}</span>
+
+      <div>
+
+        <button @click='createRoom'>
+          Tạo Room
+        </button>
+
+        <button @click='joinRoom'>
+          Join Room
+        </button>
+
+      </div>
+    </div>
+
+  
+
+    <div class="container">
+      <div id="videos"></div>
+    </div>
+  </body>
+
+  <script src="/assets/js/stringee-api.js"></script>
+  <script src="/assets/js/stringee-script.js"></script>
+</html>

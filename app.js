@@ -7,6 +7,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const expressValidator = require('express-validator');
 
+const con = require('./config');
 const userMiddleware = require('./middleware/user');
 const errorMiddleware = require('./middleware/error');
 
@@ -16,6 +17,7 @@ const courseRouter = require('./routes/course');
 const profileRouter = require('./routes/profile');
 const teacherRouter = require('./routes/teachers');
 const authRouter = require('./routes/auth');
+const stringeeRouter = require('./routes/stringee');
 
 const app = express();
 
@@ -33,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: process.env.SESSION_SECRET,
+  secret: con.SECRET_KEY,
   cookie: { secure: false, maxAge: 14400000 }
 }));
 app.use(flash());
@@ -47,6 +49,7 @@ app.use('/teachers', teacherRouter);
 app.use('/courses', courseRouter);
 app.use('/profile', profileRouter);
 app.use('/auth', authRouter);
+app.use('/stringee', stringeeRouter);
 
 const db = require('./models/azure');
 app.get('/test', (req, res) => {

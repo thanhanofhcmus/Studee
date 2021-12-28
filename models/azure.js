@@ -1,5 +1,5 @@
 const { Connection, Request } = require('tedious');
-const con = require('../config')
+const con = require('../config');
 let connection = null;
 
 // Create connection to database
