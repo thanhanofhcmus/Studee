@@ -35,11 +35,7 @@ const executeSql = (sqlString, callback, parameters) => {
   const request = new Request(
     sqlString,
     (err, rowCount) => {
-      if (callback) {
-        callback(err, resRows);
-      } else {
-        console.error('request database, no callback provided');
-      }
+      callback ? callback(err, resRows) : console.log('request database, no callback provided');
     }
   );
   if (parameters) {
@@ -53,8 +49,6 @@ const executeSql = (sqlString, callback, parameters) => {
   });
 
   connection.execSql(request);
-
-  return resRows;
 };
 
 module.exports = {

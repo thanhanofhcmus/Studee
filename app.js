@@ -51,14 +51,6 @@ app.use('/profile', profileRouter);
 app.use('/auth', authRouter);
 app.use('/stringee', stringeeRouter);
 
-const db = require('./models/azure');
-const userModel = require('./models/user');
-app.get('/test', (req, res) => {
-  userModel.getAll((err, rows) => {
-    res.send(err || rows);
-  });
-});
-
 app.use(errorMiddleware.notFound);
 app.use(errorMiddleware.error);
 

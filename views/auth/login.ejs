@@ -19,6 +19,9 @@
 <div class="wrapper">
     <div class="logo"> <img src="/assets/images/studee-logo.png"> </div>
     <div class="text-center mt-4 name"> Đăng nhập Studee </div>
+    <% if (typeof somethingWrong != 'undefined')    { %> <p class="text-danger pt-3">Có lỗi xảy ra, xin hãy thử lại</p> <% }%>
+    <% if (typeof usernameNotExists != 'undefined') { %> <p class="text-danger pt-3">Tên đăng nhập không tồn tại</p> <% }%>
+    <% if (typeof passwordWrong != 'undefined')     { %> <p class="text-danger pt-3">Mật khâu không đúng</p> <% }%>
     <form class="p-3 mt-3" action="/auth/authentication" method="post">
         <div class="form-field d-flex align-items-center">
           <span class="far fa-user"></span>
