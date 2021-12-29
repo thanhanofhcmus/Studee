@@ -17,16 +17,15 @@
             <form id="contact" action="/auth/signup" method="post">
               <div class="row d-flex justify-content-center">
                 <h2 class="mb-2 text-center">Đăng ký</h2>
-                <img class="w-25 h-25" src="/assets/images/studee-logo.png">
               </div>
               <div class="row">
-                <fieldset><input name="username" type="text" id="username" required placeholder="Tên đăng nhập"></fieldset>
-                <fieldset><input name="password" type="password" id="password" required placeholder="Mật khẩu"></fieldset>
-                <fieldset><input name="retype" type="password" id="retype" required placeholder="Nhập lại mật khẩu"></fieldset>
-                <fieldset><input name="lastName" type="text" id="lastName" required placeholder="Họ"></fieldset>
-                <fieldset><input name="firstName" type="text" id="firstName" required placeholder="Tên"></fieldset>
-                <fieldset><input name="email" type="email" id="email" pattern="[^ @]*@[^ @]*" required placeholder="Email"></fieldset>
-                <fieldset><input name="phoneNumber" type="text" id="phoneNumber" required placeholder="Số điện thoại">
+                <fieldset><input required name="username"    type="text"     placeholder="Tên đăng nhập"></fieldset>
+                <fieldset><input required name="password"    type="password" placeholder="Mật khẩu"></fieldset>
+                <fieldset><input required name="retype"      type="password" placeholder="Nhập lại mật khẩu"></fieldset>
+                <fieldset><input required name="lastName"    type="text"     placeholder="Họ"></fieldset>
+                <fieldset><input required name="firstName"   type="text"     placeholder="Tên"></fieldset>
+                <fieldset><input required name="email"       type="email"    placeholder="Email" pattern="[^ @]*@[^ @]*" ></fieldset>
+                <fieldset><input required name="phoneNumber" type="text"     placeholder="Số điện thoại">
                 </fieldset>
                 <div class="d-flex justify-content-around">
                   <div><input class="me-3" style="height: auto; width: auto;" type="radio" name="gender" value="male">Male</div>

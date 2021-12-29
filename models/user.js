@@ -22,8 +22,23 @@ const insert = (user, callback) => {
   );
 };
 
+const update = (username, user, callback) => {
+  const paramNames = ['firstName', 'lastName', 'email', 'phoneNumber', 'gender', 'typeUser'];
+  const paramSubs = paramNames.map(s => {
+    const v = user[s];
+    const val = typeof v === 'string' ? `'${v}'` : v;
+    return `${s} = ${val}`;
+  }).join(', ');
+  console.log(paramSubs);
+  db.executeSql(
+    `UPDATE [dbo].[User] SET ${paramSubs} WHERE username = '${username}'`,
+    callback
+  );
+};
+
 module.exports = {
   getAll,
   insert,
+  update,
   findByUsername
 };

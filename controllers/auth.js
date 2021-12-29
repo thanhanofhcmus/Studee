@@ -42,6 +42,7 @@ const authentication = (req, res) => {
         req.session.localsUser = {
           ...dbUser,
           name: dbUser.username,
+          gender: dbUser.gender === 0 ? 'Nam' : 'Nữ',
           isTeacher: dbUser.typeUser === 0
         };
       }
