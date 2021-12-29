@@ -28,31 +28,36 @@ const initDatabase = () => {
   });
 };
 
-const queryDatabase = () => {
-  console.log('Reading rows from the Table...');
-
+const executeSql = (sqlString, callback, parameters) => {
   // Read all rows from table
+  const resRows = [];
+
   const request = new Request(
-    'SELECT * FROM [dbo].[User]',
+    sqlString,
     (err, rowCount) => {
-      if (err) {
-        console.error(err.message);
+      if (callback) {
+        callback(err, resRows);
       } else {
-        console.log(`${rowCount} row(s) returned`);
+        console.error('request database, no callback provided');
       }
     }
   );
+  if (parameters) {
+    parameters.forEach(({ key, type, value }) => request.addParameter(key, type, value));
+  }
 
   request.on('row', columns => {
-    columns.forEach(({ metadata, value }) => {
-      console.log(`${metadata.colName} : ${value}`);
-    });
+    const obj = {};
+    columns.forEach(({ metadata, value }) => { obj[metadata.colName] = value; });
+    resRows.push(obj);
   });
 
   connection.execSql(request);
+
+  return resRows;
 };
 
 module.exports = {
   initDatabase,
-  queryDatabase
+  executeSql
 };

@@ -52,9 +52,11 @@ app.use('/auth', authRouter);
 app.use('/stringee', stringeeRouter);
 
 const db = require('./models/azure');
+const userModel = require('./models/user');
 app.get('/test', (req, res) => {
-  db.queryDatabase();
-  res.send('test');
+  userModel.getAll((err, rows) => {
+    res.send(err || rows);
+  });
 });
 
 app.use(errorMiddleware.notFound);
