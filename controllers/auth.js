@@ -2,28 +2,16 @@ const usersModel = require('../models/users');
 
 // display login page
 const login = (req, res) => {
-  const { somethingWrong, usernameNotExists, passwordWrong } = req.query;
+  const { somethingWrong, passwordWrong, usernameNotExists } = req.query;
   res.render('auth/login', {
     title: 'Đăng nhập',
     somethingWrong,
-    usernameNotExists,
-    passwordWrong
+    passwordWrong,
+    usernameNotExists
   });
 };
 
-// display signup page
-const signup = (req, res) => {
-  res.render('auth/signup', { title: 'Đăng kí', wrongRetype: req.query.wrongRetype });
-};
-
-const logout = (req, res) => {
-  req.session.loggedIn = false;
-  req.session.localsUser = undefined;
-  res.redirect('/');
-};
-
-// authentication-post
-const authentication = async (req, res) => {
+const loginPost = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -36,7 +24,8 @@ const authentication = async (req, res) => {
       req.session.localsUser = {
         ...dbUser,
         name: dbUser.username,
-        isTeacher: dbUser.userType === usersModel.USER_TYPE_TEACHER
+        isTeacher: dbUser.userType === usersModel.USER_TYPE_TEACHER,
+        password: null // for safety
       };
       res.redirect('/');
     }
@@ -46,11 +35,21 @@ const authentication = async (req, res) => {
   }
 };
 
+const signup = (req, res) => {
+  const { somethingWrong, retypeWrong, usernameExists } = req.query;
+  res.render('auth/signup', {
+    title: 'Đăng kí',
+    somethingWrong,
+    retypeWrong,
+    usernameExists
+  });
+};
+
 const signupPost = async (req, res) => {
   const user = req.body;
 
   if (user.password !== user.retype) {
-    res.redirect('/auth/signup?wrongRetype');
+    res.redirect('/auth/signup?retypeWrong');
     return;
   }
   try {
@@ -69,10 +68,48 @@ const signupPost = async (req, res) => {
   }
 };
 
+const logout = (req, res) => {
+  req.session.loggedIn = false;
+  req.session.localsUser = undefined;
+  res.redirect('/');
+};
+
+const deleteAccount = (req, res) => {
+  const { somethingWrong, accountNotExists, passwordWrong } = req.query;
+  res.render('auth/delete-account', {
+    title: 'Xóa tài khoản',
+    somethingWrong,
+    passwordWrong,
+    accountNotExists
+  });
+};
+
+const deleteAccountPost = async (req, res) => {
+  const username = res.locals.user.name;
+  try {
+    const rows = await usersModel.findByUsername(username);
+    if (rows.length === 0) {
+      res.redirect('/auth/delete-account?accountNotExists');
+      return;
+    }
+    if (req.body.password !== rows[0].password) {
+      res.redirect('/auth/delete-account?passwordWrong');
+      return;
+    }
+    await usersModel.remove(username);
+    res.redirect('/auth/logout');
+  } catch (err) {
+    console.error(err);
+    res.redirect('/auth/delete-account?somethingWrong');
+  }
+};
+
 module.exports = {
   login,
+  loginPost,
   signup,
+  signupPost,
   logout,
-  authentication,
-  signupPost
+  deleteAccount,
+  deleteAccountPost
 };

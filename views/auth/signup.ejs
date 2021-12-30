@@ -9,6 +9,8 @@
 
 <body>
 
+  <%- include('../partials/header'); %>
+
   <section class="contact-us" id="contact">
     <div class="container-sm">
       <div class="row justify-content-center">
@@ -17,6 +19,9 @@
             <form id="contact" action="/auth/signup" method="post">
               <div class="row d-flex justify-content-center">
                 <h2 class="mb-2 text-center">Đăng ký</h2>
+                <% if (typeof somethingWrong != 'undefined') { %> <p class="text-danger pt-3">Có lỗi xảy ra, xin hãy thử lại</p> <% }%>
+                <% if (typeof retypeWrong != 'undefined')    { %> <p class="text-danger pt-3">Nhập lại mật khẩu sai</p> <% }%>
+                <% if (typeof usernameExists != 'undefined') { %> <p class="text-danger pt-3">Tên đăng nhập đã tồn tại</p> <% }%>
               </div>
               <div class="row">
                 <fieldset><input required name="username"    type="text"     placeholder="Tên đăng nhập"></fieldset>
@@ -25,7 +30,7 @@
                 <fieldset><input required name="lastName"    type="text"     placeholder="Họ"></fieldset>
                 <fieldset><input required name="firstName"   type="text"     placeholder="Tên"></fieldset>
                 <fieldset><input required name="email"       type="email"    placeholder="Email" pattern="[^ @]*@[^ @]*" ></fieldset>
-                <fieldset><input required name="phoneNumber" type="text"     placeholder="Số điện thoại">
+                <fieldset><input required name="phoneNumber" type="number"   placeholder="Số điện thoại">
                 </fieldset>
                 <div class="d-flex justify-content-around">
                   <div><input class="me-3" style="height: auto; width: auto;" type="radio" name="gender" value="male">Nam</div>

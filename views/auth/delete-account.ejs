@@ -16,12 +16,12 @@
       <div class="row justify-content-center">
         <div class="col-lg-9 align-self-center">
           <div id="contact">
-            <form id="contact" action="/auth/login" method="post">
+            <form id="contact" action="/auth/delete-account" method="post">
               <div class="row d-flex justify-content-center">
-                <h2 class="mb-2 text-center">Đăng nhập</h2>
-                <% if (typeof somethingWrong != 'undefined')    { %> <p class="text-danger pt-3">Có lỗi xảy ra, xin hãy thử lại</p> <% }%>
-                <% if (typeof passwordWrong != 'undefined')     { %> <p class="text-danger pt-3">Mật khâu không đúng</p> <% }%>
-                <% if (typeof usernameNotExists != 'undefined') { %> <p class="text-danger pt-3">Tên đăng nhập không tồn tại</p> <% }%>
+                <h2 class="mb-2 text-center">Xác nhận xóa tài khoản</h2>
+                <% if (typeof somethingWrong != 'undefined')   { %> <p class="text-danger pt-3">Có lỗi xảy ra, xin hãy thử lại</p> <% }%>
+                <% if (typeof passwordWrong != 'undefined')    { %> <p class="text-danger pt-3">Mật khẩu sai</p> <% }%>
+                <% if (typeof accountNotExists != 'undefined') { %> <p class="text-danger pt-3">Tài khoản không tồn tại</p> <% }%>
               </div>
               <div class="row">
                 <fieldset><input required name="username" type="text"     placeholder="Tên đăng nhập"></fieldset>
@@ -29,7 +29,7 @@
               </div>
               
               <div class="col-lg-12 d-flex justify-content-center">
-                <fieldset><button type="submit" id="form-submit" class="button">Gửi</button></fieldset>
+                <fieldset><button type="submit" id="form-submit" class="button">Xóa tài khoản</button></fieldset>
               </div>
             </form>
           </div>

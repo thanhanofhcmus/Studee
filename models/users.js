@@ -42,7 +42,7 @@ const update = (username, user) => {
 };
 
 const remove = (username) => {
-  return db.asyncExecuteSql(`DELETE FROM [dbo.[User] WHERE username = '${username}'`);
+  return db.asyncExecuteSql(`DELETE FROM [dbo].[User] WHERE username = '${username}'`);
 };
 
 module.exports = {
