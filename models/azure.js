@@ -28,7 +28,7 @@ const initDatabase = () => {
   });
 };
 
-const executeSql = (sqlString, callback, nextCallback) => {
+const executeSql = (sqlString, callback) => {
   // Read all rows from table
   const resRows = [];
 
@@ -47,12 +47,14 @@ const executeSql = (sqlString, callback, nextCallback) => {
     resRows.push(obj);
   });
 
-  nextCallback && request.on('requestCompleted', () => nextCallback());
-
   connection.execSql(request);
 };
 
+const asyncExecuteSql = sqlString =>
+  new Promise((resolve, reject) => executeSql(sqlString, (err, rows) => err ? reject(err) : resolve(rows)));
+
 module.exports = {
   initDatabase,
-  executeSql
+  executeSql,
+  asyncExecuteSql
 };

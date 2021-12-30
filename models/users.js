@@ -6,56 +6,50 @@ const USER_TYPE_STUDENT = 1;
 const GENDER_FEMALE = 0;
 const GENDER_MALE = 1;
 
-const getAll = (callback, userType) => {
+const getAll = async (userType) => {
   const userTypeWhere = userType !== undefined ? `WHERE userType = ${userType}` : '';
-  db.executeSql(`SELECT * FROM [dbo].[User] ${userTypeWhere}`, callback);
+  db.asyncExecuteSql(`SELECT * FROM [dbo].[User] ${userTypeWhere}`);
 };
 
-const findByUsername = (username, callback, userType) => {
+const findByUsername = async (username, userType) => {
   const userTypeWhere = userType !== undefined ? `WHERE userType = ${userType}` : '';
-  db.executeSql(`SELECT * FROM [dbo].[User] WHERE username = '${username}' ${userTypeWhere}`, callback);
+  return db.asyncExecuteSql(`SELECT * FROM [dbo].[User] WHERE username = '${username}' ${userTypeWhere}`);
 };
 
-const findByID = (id, callback, userType) => {
+const findByID = async (id, userType) => {
   const userTypeWhere = userType !== undefined ? `WHERE userType = ${userType}` : '';
-  db.executeSql(`SELECT * FROM [dbo].[User] WHERE userID = '${id}' ${userTypeWhere}`, callback);
+  db.asyncExecuteSql(`SELECT * FROM [dbo].[User] WHERE userID = '${id}' ${userTypeWhere}`);
 };
 
-const insert = (user, callback) => {
-  const paramNames = ['userID', 'firstName', 'lastName', 'gender', 'phoneNum', 'email', 'username', 'password', 'userType'];
-  const paramSubs = paramNames.map(s => {
+const insert = async (user) => {
+  const paramNames = ['firstName', 'lastName', 'gender', 'phoneNumber', 'email', 'username', 'password', 'userType'];
+  const paramSubs = paramNames.join(', ');
+  const paramVals = paramNames.map(s => {
     const v = user[s];
-    const val = typeof v === 'string' ? `'${v}'` : v;
-    return `${s} = ${val}`;
+    return typeof v === 'string' ? `'${v}'` : v;
   }).join(', ');
-  console.log(paramSubs);
-  db.executeSql(
-    `INSERT INTO [dbo].[User] VALUES (${paramSubs})`,
-    callback
-  );
+  console.log(paramVals);
+  db.asyncExecuteSql(`INSERT INTO [dbo].[User](${paramSubs}) VALUES (${paramVals})`);
 };
 
-const update = (username, user, callback) => {
+const update = (username, user) => {
   const paramNames = ['firstName', 'lastName', 'email', 'phoneNumber', 'gender'];
   const paramSubs = paramNames.map(s => {
     const v = user[s];
     const val = typeof v === 'string' ? `'${v}'` : v;
     return `${s} = ${val}`;
   }).join(', ');
-  db.executeSql(
-    `UPDATE [dbo].[User] SET ${paramSubs} WHERE username = '${username}'`,
-    callback
-  );
+  db.asyncExecuteSql(`UPDATE [dbo].[User] SET ${paramSubs} WHERE username = '${username}'`);
 };
 
 module.exports = {
-  getAll,
-  insert,
-  update,
-  findByID,
-  findByUsername,
   USER_TYPE_TEACHER,
   USER_TYPE_STUDENT,
   GENDER_MALE,
-  GENDER_FEMALE
+  GENDER_FEMALE,
+  getAll,
+  findByID,
+  findByUsername,
+  insert,
+  update
 };
