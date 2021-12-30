@@ -6,40 +6,43 @@ const USER_TYPE_STUDENT = 1;
 const GENDER_FEMALE = 0;
 const GENDER_MALE = 1;
 
-const getAll = async (userType) => {
+const getAll = (userType) => {
   const userTypeWhere = userType !== undefined ? `WHERE userType = ${userType}` : '';
   db.asyncExecuteSql(`SELECT * FROM [dbo].[User] ${userTypeWhere}`);
 };
 
-const findByUsername = async (username, userType) => {
+const findByUsername = (username, userType) => {
   const userTypeWhere = userType !== undefined ? `WHERE userType = ${userType}` : '';
   return db.asyncExecuteSql(`SELECT * FROM [dbo].[User] WHERE username = '${username}' ${userTypeWhere}`);
 };
 
-const findByID = async (id, userType) => {
+const findByID = (id, userType) => {
   const userTypeWhere = userType !== undefined ? `WHERE userType = ${userType}` : '';
-  db.asyncExecuteSql(`SELECT * FROM [dbo].[User] WHERE userID = '${id}' ${userTypeWhere}`);
+  return db.asyncExecuteSql(`SELECT * FROM [dbo].[User] WHERE userID = '${id}' ${userTypeWhere}`);
 };
 
-const insert = async (user) => {
+const insert = (user) => {
   const paramNames = ['firstName', 'lastName', 'gender', 'phoneNumber', 'email', 'username', 'password', 'userType'];
   const paramSubs = paramNames.join(', ');
   const paramVals = paramNames.map(s => {
     const v = user[s];
     return typeof v === 'string' ? `'${v}'` : v;
   }).join(', ');
-  console.log(paramVals);
-  db.asyncExecuteSql(`INSERT INTO [dbo].[User](${paramSubs}) VALUES (${paramVals})`);
+  return db.asyncExecuteSql(`INSERT INTO [dbo].[User](${paramSubs}) VALUES (${paramVals})`);
 };
 
 const update = (username, user) => {
   const paramNames = ['firstName', 'lastName', 'email', 'phoneNumber', 'gender'];
-  const paramSubs = paramNames.map(s => {
+  const paramVals = paramNames.map(s => {
     const v = user[s];
     const val = typeof v === 'string' ? `'${v}'` : v;
     return `${s} = ${val}`;
   }).join(', ');
-  db.asyncExecuteSql(`UPDATE [dbo].[User] SET ${paramSubs} WHERE username = '${username}'`);
+  return db.asyncExecuteSql(`UPDATE [dbo].[User] SET ${paramVals} WHERE username = '${username}'`);
+};
+
+const remove = (username) => {
+  return db.asyncExecuteSql(`DELETE FROM [dbo.[User] WHERE username = '${username}'`);
 };
 
 module.exports = {
@@ -51,5 +54,6 @@ module.exports = {
   findByID,
   findByUsername,
   insert,
-  update
+  update,
+  remove
 };

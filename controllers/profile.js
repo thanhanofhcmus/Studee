@@ -1,6 +1,6 @@
 const coursesModel = require('../models/courses');
-const userModel = require('../models/user');
 const usersModel = require('../models/users');
+const { GENDER_MALE, GENDER_FEMALE, USER_TYPE_TEACHER, USER_TYPE_STUDENT } = usersModel;
 
 module.exports.list = (req, res) => {
   const allCourses = coursesModel.getAll();
@@ -11,28 +11,23 @@ module.exports.list = (req, res) => {
   res.render('profile/profiles', {
     title: 'Profile',
     courses,
-    gender: gender === usersModel.GENDER_MALE ? 'Nam' : 'Nữ',
-    userType: userType === usersModel.USER_TYPE_TEACHER ? 'Giáo viên' : 'Học viên',
+    gender: gender === GENDER_MALE ? 'Nam' : 'Nữ',
+    userType: userType === USER_TYPE_TEACHER ? 'Giáo viên' : 'Học viên',
     coursesName: 'Các khóa học đã tham gia'
   });
 };
 
 module.exports.edit = (req, res) => {
-  // student.gender = student.gender ? 'Nam' : 'Nữ';
-  res.render('profile/edit', { title: 'Chỉnh sửa', student: null });
+  res.render('profile/edit', { title: 'Chỉnh sửa' });
 };
 
-module.exports.update = (req, res) => {
+module.exports.update = async (req, res) => {
   const user = {
     ...req.body,
-    gender: req.body.gender === 'male' ? 0 : 1,
-    typeUser: req.body.typeUser === 'teacher' ? 0 : 1
+    gender: req.body.gender === 'male' ? GENDER_MALE : GENDER_FEMALE,
+    typeUser: req.body.typeUser === 'teacher' ? USER_TYPE_TEACHER : USER_TYPE_STUDENT
   };
-  userModel.update(res.locals.user.name, user, (err, rows) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.redirect('/auth/logout');
-    }
-  });
+  const result = await usersModel.update(res.locals.user.name, user);
+  console.log(result);
+  res.redirect('/auth/logout');
 };
