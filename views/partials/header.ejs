@@ -14,7 +14,17 @@
               <li><a href="/auth/login">Đăng nhập</a></li>
               <li><a href="/auth/signup">Đăng ký</a></li>
             <% } else {%>
-              <li><a href=<%= coursesLink %>>Các lớp học của bạn</a></li>
+              <% if (user.isTeacher) { %>
+                <li class="has-sub">
+                  <a href="javascript:void(0)">Lớp của bạn</a>
+                  <ul class="sub-menu">
+                    <li><a href="/courses/list-of-user/<%= user.userID %>">Xem tất cả</a></li>
+                    <li><a href="/courses/create">Tạo mới</a></li>
+                  </ul>
+                </li>
+              <% } else {%>
+                  <li><a href="/courses/list-of-user/<%= user.userID %>">Xem tất cả</a></li>
+              <% } %>
               <li class="has-sub">
                 <a href="javascript:void(0)">Xin Chào <%= user.name %></a>
                 <ul class="sub-menu">

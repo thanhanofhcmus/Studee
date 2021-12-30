@@ -7,7 +7,7 @@ const toRenderData = course => {
   return {
     ...course,
     month: months[startDate.getMonth()],
-    link: '/courses/course-details',
+    link: `/courses/course-details/${course.courseID}`,
     imageLink: '/assets/images/meeting-04.jpg',
     formattedStartTime: formatTime(startTime),
     formattedEndTime: formatTime(new Date(endTime))
@@ -29,9 +29,19 @@ const findByID = id => db.asyncExecuteSql(`SELECT * FROM [dbo].[Course] WHERE co
 
 const findByTeacherID = id => db.asyncExecuteSql(`SELECT * FROM [dbo].[Course] WHERE teacherID = ${id}`).then(mapCDS);
 
+const findByParticipatedStudentID = id =>
+  db.asyncExecuteSql(`
+  SELECT *
+  FROM [dbo].[Course] AS C JOIN [dbo].[Participate] AS P
+  ON C.courseID = P.courseID
+  WHERE P.studentID = ${id}
+  `)
+    .then(mapCDS);
+
 module.exports = {
   getAll,
   findByID,
   findByTeacherID,
+  findByParticipatedStudentID,
   toRenderData
 };

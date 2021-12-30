@@ -16,9 +16,10 @@ const findByUsername = (username, userType) => {
   return db.asyncExecuteSql(`SELECT * FROM [dbo].[User] WHERE username = '${username}' ${userTypeWhere}`);
 };
 
-const findByID = (id, userType) => {
+const findByID = async (id, userType) => {
   const userTypeWhere = userType !== undefined ? `WHERE userType = ${userType}` : '';
-  return db.asyncExecuteSql(`SELECT * FROM [dbo].[User] WHERE userID = '${id}' ${userTypeWhere}`);
+  const users = await db.asyncExecuteSql(`SELECT * FROM [dbo].[User] WHERE userID = '${id}' ${userTypeWhere}`);
+  return users[0];
 };
 
 const insert = (user) => {

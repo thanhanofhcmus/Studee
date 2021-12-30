@@ -3,39 +3,29 @@
 
 <head>
 
-  <%- include('../../partials/meta'); %>
+  <%- include('../partials/meta'); %>
 
 </head>
 
 <body>
 
-  <%- include('../../partials/header'); %>
+  <%- include('../partials/header'); %>
+
+  <% if (loggedIn && user.isTeacher) { %>
 
   <section class="contact-us" id="contact">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-9">
-          <form id="contact" action="/teachers/courses/create" method="post">
+          <form id="contact" action="/courses/create" method="post">
             <div class="row">
-              <div class="col-lg-12">
+              <div class="col-lg-12 text-center">
                 <h2>Tạo khóa học mới</h2>
               </div>
               <div class="col-lg-6">
                 <p class="fw-bold m-2">Tên khóa học</p>
                 <fieldset>
-                  <input name="title" type="text" id="title" placeholder="Khóa học" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-6">
-                <p class="fw-bold m-2">Tên môn học</p>
-                <fieldset>
-                  <input name="subject" type="text" id="subject" placeholder="Môn học" required=>
-                </fieldset>
-              </div>
-              <div class="col-lg-6">
-                <p class="fw-bold m-2">Trình độ</p>
-                <fieldset>
-                  <input name="level" type="text" id="level" placeholder="Trình độ" required=>
+                  <input name="courseName" type="text" id="courseName" placeholder="Khóa học" required>
                 </fieldset>
               </div>
               <div class="col-lg-6">
@@ -71,7 +61,7 @@
                   </textarea>
                 </fieldset>
               </div>
-              <div class="col-lg-12">
+              <div class="col-lg-12 d-flex justify-content-center">
                 <fieldset>
                   <button type="submit" id="form-submit" class="button">Tọa khóa học</button>
                 </fieldset>
@@ -83,7 +73,30 @@
     </div>
   </section>
 
-  <%- include('../../partials/footer'); %>
+  <% } else { %>
+  <section class="contact-us" id="contact">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <form id="contact" action="/courses/create" method="post">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <h2>Chỉ có giá viên mới có thể tạo khóa học</h2>
+              </div>
+              <div class="col-lg-12 d-flex justify-content-center">
+                <fieldset>
+                  <button id="form-submit" class="button"><a class="text-white" href="/">Quay lại trang chủ</a></button>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
+  <%- include('../partials/footer'); %>
 </body>
 
 </html>

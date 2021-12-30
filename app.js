@@ -15,7 +15,6 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const courseRouter = require('./routes/course');
 const profileRouter = require('./routes/profile');
-const teacherRouter = require('./routes/teachers');
 const authRouter = require('./routes/auth');
 const stringeeRouter = require('./routes/stringee');
 
@@ -45,7 +44,6 @@ app.use(userMiddleware);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/teachers', teacherRouter);
 app.use('/courses', courseRouter);
 app.use('/profile', profileRouter);
 app.use('/auth', authRouter);
