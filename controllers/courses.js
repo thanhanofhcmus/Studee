@@ -1,8 +1,9 @@
 const coursesModel = require('../models/courses');
 
-const list = (req, res) => {
-  const courses = coursesModel.getAll().map(coursesModel.toRenderData);
-  res.render('course/courses', { title: 'Các khoá học', courses });
+const list = async (req, res) => {
+  const courses = await coursesModel.getAll();
+  const renderCourse = courses.map(coursesModel.toRenderData);
+  res.render('course/courses', { title: 'Các khoá học', courses: renderCourse });
 };
 
 const courseDetails = async (req, res) => {
