@@ -23,30 +23,31 @@ const initDatabase = () => {
 
   connection.connect(err => {
     if (err) {
-      console.error(err);
+      console.error('azure error: ', err);
     }
   });
 };
 
-const executeSql = (sqlString, callback, parameters) => {
+const executeSql = (sqlString, callback, nextCallback) => {
   // Read all rows from table
   const resRows = [];
 
   const request = new Request(
     sqlString,
     (err, rowCount) => {
-      callback ? callback(err, resRows) : console.log('request database, no callback provided');
+      callback ? callback(err, resRows) : console.error('azure error: request database, no callback provided');
     }
   );
-  if (parameters) {
-    parameters.forEach(({ key, type, value }) => request.addParameter(key, type, value));
-  }
+
+  request.on('error', err => console.error(`azure request error: ${err}`));
 
   request.on('row', columns => {
     const obj = {};
     columns.forEach(({ metadata, value }) => { obj[metadata.colName] = value; });
     resRows.push(obj);
   });
+
+  nextCallback && request.on('requestCompleted', () => nextCallback());
 
   connection.execSql(request);
 };

@@ -1,9 +1,7 @@
-const coursesModel = require('../../models/courses');
-const teachersModel = require('../../models/teachers');
+// const usersModel = require('../../models/users');
 
 module.exports.create = (req, res) => {
-  const teacher = teachersModel.findById(res.locals.user.id);
-  res.render('teachers/courses/creator', { teacher });
+  res.render('teachers/courses/creator', { teacher: null });
 };
 
 module.exports.update = (req, res) => {
@@ -11,28 +9,29 @@ module.exports.update = (req, res) => {
 };
 
 module.exports.list = (req, res) => {
-  const teacherId = res.locals.user.id;
-  const courses = coursesModel
-    .findByTeacherId(teacherId)
-    .map(coursesModel.toRenderData)
-    .map(course => ({
-      ...course,
-      link: `/teachers/courses/detail/${course.id}`
-    }));
-  res.render('teachers/courses/list', { title: 'Danh sách khóa học', courses });
+  // const teacherId = res.locals.user.id;
+  // const courses = coursesModel
+  //   .findByTeacherId(teacherId)
+  //   .map(coursesModel.toRenderData)
+  //   .map(course => ({
+  //     ...course,
+  //     link: `/teachers/courses/detail/${course.id}`
+  //   }));
+  res.render('teachers/courses/list', { title: 'Danh sách khóa học', courses: null });
 };
 
 module.exports.detail = (req, res) => {
-  const courseId = req.params.id;
-  const teacherId = res.locals.user.id;
+  // const courseId = req.params.id;
+  // const teacherId = res.locals.user.id;
 
-  const course = coursesModel.toRenderData(coursesModel.findById(courseId));
-  const teacher = teachersModel.findById(teacherId);
+  // const course = coursesModel.toRenderData(coursesModel.findById(courseId));
+  // const teacher = teachersModel.findById(teacherId);
 
-  const renderCourse = {
-    ...course,
-    updateLink: `/teachers/courses/detail/${course.id}`
-  };
+  // const renderCourse = {
+  //   ...course,
+  //   updateLink: `/teachers/courses/detail/${course.id}`
+  // };
+  const renderCourse = null;
 
-  res.render('teachers/courses/detail', { title: 'Khóa học', course: renderCourse, teacher });
+  res.render('teachers/courses/detail', { title: 'Khóa học', course: renderCourse, teacher: null });
 };
