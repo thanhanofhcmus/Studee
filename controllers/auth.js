@@ -23,31 +23,27 @@ const logout = (req, res) => {
 };
 
 // authentication-post
-const authentication = (req, res) => {
+const authentication = async (req, res) => {
   const { username, password } = req.body;
 
-  usersModel.findByUsername(username, (err, rows) => {
-    let redirectUrl = '/';
-    if (err) {
-      redirectUrl = '/auth/login?somethingWrong';
-    } else if (rows.length === 0) {
-      redirectUrl = '/auth/login?usernameNotExists';
+  try {
+    const rows = await usersModel.findByUsername(username);
+    const dbUser = rows[0];
+    if (dbUser.password !== password) {
+      res.redirect('/auth/login?passwordWrong');
     } else {
-      const dbUser = rows[0];
-      if (dbUser.password !== password) {
-        redirectUrl = '/auth/login?passwordWrong';
-      } else {
-        req.session.loggedIn = true;
-        req.session.localsUser = {
-          ...dbUser,
-          name: dbUser.username,
-          gender: dbUser.gender,
-          isTeacher: dbUser.userType === usersModel.USER_TYPE_TEACHER
-        };
-      }
+      req.session.loggedIn = true;
+      req.session.localsUser = {
+        ...dbUser,
+        name: dbUser.username,
+        isTeacher: dbUser.userType === usersModel.USER_TYPE_TEACHER
+      };
+      res.redirect('/');
     }
-    res.redirect(redirectUrl);
-  });
+  } catch (err) {
+    console.error(err);
+    res.redirect('/auth/login?somethingWrong');
+  }
 };
 
 const signupPost = async (req, res) => {
@@ -55,17 +51,21 @@ const signupPost = async (req, res) => {
 
   if (user.password !== user.retype) {
     res.redirect('/auth/signup?wrongRetype');
-  } else {
-    usersModel.findByUsername(user.username, (err, rows) => {
-      if (err) {
-        res.send(err);
-      } else if (rows.length !== 0) {
-        res.redirect('/auth/signup?usernameExists');
-      } else {
-        usersModel.insert(user);
-        res.redirect('/');
-      }
-    });
+    return;
+  }
+  try {
+    const rows = await usersModel.findByUsername(user.username);
+    if (rows.length !== 0) {
+      res.redirect('/auth/signup?usernameExists');
+    } else {
+      user.gender = user.gender === 'male' ? usersModel.GENDER_MALE : usersModel.GENDER_FEMALE;
+      user.userType = user.userType === 'teacher' ? usersModel.USER_TYPE_TEACHER : usersModel.USER_TYPE_STUDENT;
+      await usersModel.insert(user);
+      res.redirect('/');
+    }
+  } catch (err) {
+    console.error(err);
+    res.redirect('/auth/signup?somethingWrong');
   }
 };
 
