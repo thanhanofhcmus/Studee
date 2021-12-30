@@ -8,7 +8,7 @@ const GENDER_MALE = 1;
 
 const getAll = (userType) => {
   const userTypeWhere = userType !== undefined ? `WHERE userType = ${userType}` : '';
-  db.asyncExecuteSql(`SELECT * FROM [dbo].[User] ${userTypeWhere}`);
+  return db.asyncExecuteSql(`SELECT * FROM [dbo].[User] ${userTypeWhere}`);
 };
 
 const findByUsername = (username, userType) => {

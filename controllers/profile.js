@@ -27,7 +27,12 @@ module.exports.update = async (req, res) => {
     gender: req.body.gender === 'male' ? GENDER_MALE : GENDER_FEMALE,
     typeUser: req.body.typeUser === 'teacher' ? USER_TYPE_TEACHER : USER_TYPE_STUDENT
   };
-  const result = await usersModel.update(res.locals.user.name, user);
-  console.log(result);
-  res.redirect('/auth/logout');
+  try {
+    const username = res.locals.user.name;
+    await usersModel.update(username, user);
+    const { password } = (await usersModel.findByUsername(username))[0];
+    res.redirect(`/auth/automate-login?username=${username}&password=${password}`);
+  } catch (err) {
+    res.redirect('/profile/edit?somethingWrong');
+  }
 };

@@ -1,18 +1,9 @@
 const usersModel = require('../models/users');
+const { GENDER_MALE, GENDER_FEMALE, USER_TYPE_TEACHER, USER_TYPE_STUDENT } = usersModel;
 
-// display login page
-const login = (req, res) => {
-  const { somethingWrong, passwordWrong, usernameNotExists } = req.query;
-  res.render('auth/login', {
-    title: 'Đăng nhập',
-    somethingWrong,
-    passwordWrong,
-    usernameNotExists
-  });
-};
-
-const loginPost = async (req, res) => {
-  const { username, password } = req.body;
+const automateLogin = async (req, res) => {
+  const { username, password } = req.query;
+  console.log(req.query);
 
   try {
     const rows = await usersModel.findByUsername(username);
@@ -35,6 +26,21 @@ const loginPost = async (req, res) => {
   }
 };
 
+const login = (req, res) => {
+  const { somethingWrong, passwordWrong, usernameNotExists } = req.query;
+  res.render('auth/login', {
+    title: 'Đăng nhập',
+    somethingWrong,
+    passwordWrong,
+    usernameNotExists
+  });
+};
+
+const loginPost = async (req, res) => {
+  const { username, password } = req.body;
+  res.redirect(`/auth/automate-login?username=${username}&password=${password}`);
+};
+
 const signup = (req, res) => {
   const { somethingWrong, retypeWrong, usernameExists } = req.query;
   res.render('auth/signup', {
@@ -47,20 +53,21 @@ const signup = (req, res) => {
 
 const signupPost = async (req, res) => {
   const user = req.body;
+  const { username, password, retype, gender, userType } = user;
 
-  if (user.password !== user.retype) {
+  if (password !== retype) {
     res.redirect('/auth/signup?retypeWrong');
     return;
   }
   try {
-    const rows = await usersModel.findByUsername(user.username);
+    const rows = await usersModel.findByUsername(username);
     if (rows.length !== 0) {
       res.redirect('/auth/signup?usernameExists');
     } else {
-      user.gender = user.gender === 'male' ? usersModel.GENDER_MALE : usersModel.GENDER_FEMALE;
-      user.userType = user.userType === 'teacher' ? usersModel.USER_TYPE_TEACHER : usersModel.USER_TYPE_STUDENT;
+      user.gender = gender === 'male' ? GENDER_MALE : GENDER_FEMALE;
+      user.userType = userType === 'teacher' ? USER_TYPE_TEACHER : USER_TYPE_STUDENT;
       await usersModel.insert(user);
-      res.redirect('/');
+      res.redirect(`/auth/automate-login?username=${username}&password=${password}`);
     }
   } catch (err) {
     console.error(err);
@@ -105,6 +112,7 @@ const deleteAccountPost = async (req, res) => {
 };
 
 module.exports = {
+  automateLogin,
   login,
   loginPost,
   signup,
