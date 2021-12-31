@@ -2,18 +2,18 @@ const coursesModel = require('../models/courses');
 const usersModel = require('../models/users');
 const { GENDER_MALE, GENDER_FEMALE, USER_TYPE_TEACHER, USER_TYPE_STUDENT } = usersModel;
 
-module.exports.list = (req, res) => {
-  const allCourses = coursesModel.getAll();
-  const courses = allCourses
-    // .filter(course => student.courses.some(id => id === course.id))
-    .map(coursesModel.toRenderData);
-  const { gender, userType } = res.locals.user;
+module.exports.list = async (req, res) => {
+  const { userID, gender, isTeacher } = res.locals.user;
+  const courses = await (isTeacher
+    ? coursesModel.findByTeacherID(userID)
+    : coursesModel.findByParticipatedStudentID(userID));
+  const renderCourse = courses.map(coursesModel.toRenderData);
   res.render('profile/profiles', {
     title: 'Profile',
-    courses,
+    courses: renderCourse,
     gender: gender === GENDER_MALE ? 'Nam' : 'Nữ',
-    userType: userType === USER_TYPE_TEACHER ? 'Giáo viên' : 'Học viên',
-    coursesName: 'Các khóa học đã tham gia'
+    userType: isTeacher ? 'Giáo viên' : 'Học viên',
+    coursesName: isTeacher ? 'Các khóa học đang dạy' : 'Các khóa học đã tham gia'
   });
 };
 
