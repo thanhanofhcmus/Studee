@@ -44,7 +44,11 @@
                           <a href="/courses/delete/<%= course.courseID %>">Xóa khóa học</a>
                         <% } %>
                         <% if (loggedIn && !user.isTeacher) { %>
-                          <a href="/courses/participate">Tham gia khóa học</a>
+                          <% if (isInCourse) { %>
+                            <a href="/courses/leave/<%= course.courseID %>">Rời khỏi khóa học</a>
+                          <% } else { %>
+                            <a href="/courses/participate/<%= course.courseID %>">Tham gia khóa học</a>
+                          <% } %>
                         <% } %>
                       </div>
                     </div>
