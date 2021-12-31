@@ -7,7 +7,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const expressValidator = require('express-validator');
 
-const con = require('./config');
+const config = require('./config');
 const userMiddleware = require('./middleware/user');
 const errorMiddleware = require('./middleware/error');
 
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: con.SECRET_KEY,
+  secret: config.SESSION_SECRET,
   cookie: { secure: false, maxAge: 14400000 }
 }));
 app.use(flash());

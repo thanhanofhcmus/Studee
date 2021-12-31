@@ -11,4 +11,7 @@ router.get('/details/:id', controller.details);
 router.get('/create', controller.create);
 router.post('/create', controller.createPost);
 
+router.get('/edit/:id', controller.edit);
+router.post('/edit/:id', controller.editPost);
+
 module.exports = router;

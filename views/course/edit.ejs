@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <%- include('../partials/meta'); %>
+
+</head>
+
+<body>
+
+  <%- include('../partials/header'); %>
+
+  <% if (isValid) { %>
+
+  <section class="contact-us" id="contact">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <form id="contact" action="/courses/edit/<%= course.courseID %>" method="post">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <h2>Tạo khóa học mới</h2>
+                <% if (typeof somethingWrong != 'undefined') { %><p class="text-danger pt-3">Có lỗi xảy ra, xin hãy thử lại</p><% } %>
+              </div>
+              <div class="col-lg-6">
+                <p class="fw-bold m-2">Tên khóa học</p>
+                <fieldset><input id="courseName" name="courseName" type="text" placeholder=<%= course.courseName %> required></fieldset>
+              </div>
+              <div class="col-lg-6">
+                <p class="fw-bold m-2">Giá tiền</p>
+                <fieldset><input id="price" name="price" type="number" min=0 step="0.01" placeholder=<%= course.price %> required></fieldset>
+              </div>
+              <div class="col-lg-4">
+                <p class="fw-bold m-2">Ngày bắt đầu</p>
+                <fieldset><input name="startDate" value=<%= course.startDate.toISOString().substring(0, 10) %> type="date" required></fieldset>
+              </div>
+              <div class="col-lg-4">
+                <p class="fw-bold m-2">Thời gian bắt đầu</p>
+                <fieldset><input name="startTime" value=<%= course.startTime.toISOString().substring(11, 16) %> type="time"required></fieldset>
+              </div>
+              <div class="col-lg-4">
+                <p class="fw-bold m-2">Thời gian kết thúc</p>
+                <fieldset><input name="endTime" value=<%= course.endTime.toISOString().substring(11, 16) %> type="time"required></fieldset>
+              </div>
+              
+              <div class="col-lg-12">
+                <p class="fw-bold m-2">Mô tả khóa học</p>
+                <fieldset>
+                  <textarea id="courseDesc" name="courseDesc" type="text" class="form-control" required></textarea>
+                </fieldset>
+              </div>
+              <div class="col-lg-12 d-flex justify-content-center">
+                <fieldset><button type="submit" id="form-submit" class="button">Sửa khóa học</button></fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <% } else { %>
+  <section class="contact-us" id="contact">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <form id="contact" action="/courses/create" method="post">
+            <div class="row">
+              <div class="col-lg-12 text-center">
+                <h2>Chỉ có giáo viên của khóa học này mới có quyền sửa</h2>
+              </div>
+              <div class="col-lg-12 d-flex justify-content-center">
+                <fieldset>
+                  <button id="form-submit" class="button"><a class="text-white" href="/">Quay lại trang chủ</a></button>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
+  <%- include('../partials/footer'); %>
+  <script>
+    document.getElementById('courseName').value = '<%= course.courseName %>';
+    document.getElementById('price').value = '<%= course.price %>';
+    document.getElementById('courseDesc').value = '<%= course.courseDesc %>';
+  </script>
+</body>
+
+</html>

@@ -7,7 +7,7 @@ const toRenderData = course => {
   return {
     ...course,
     month: months[startDate.getMonth()],
-    link: `/courses/course-details/${course.courseID}`,
+    link: `/courses/details/${course.courseID}`,
     imageLink: '/assets/images/meeting-04.jpg',
     formattedStartTime: formatTime(startTime),
     formattedEndTime: formatTime(new Date(endTime))
@@ -38,10 +38,32 @@ const findByParticipatedStudentID = id =>
   `)
     .then(mapCDS);
 
+const insert = course => {
+  const paramNames = ['teacherID', 'courseName', 'courseDesc', 'startDate', 'startTime', 'endTime', 'price'];
+  const paramSubs = paramNames.join(', ');
+  const paramVals = paramNames.map(s => {
+    const v = course[s];
+    return typeof v === 'string' ? `'${v}'` : v;
+  }).join(', ');
+  return db.asyncExecuteSql(`INSERT INTO [dbo].[Course](${paramSubs}) VALUES (${paramVals})`);
+};
+
+const update = (id, course) => {
+  const paramNames = ['courseName', 'courseDesc', 'startDate', 'startTime', 'endTime', 'price'];
+  const paramVals = paramNames.map(s => {
+    const v = course[s];
+    const val = typeof v === 'string' ? `'${v}'` : v;
+    return `${s} = ${val}`;
+  }).join(', ');
+  return db.asyncExecuteSql(`UPDATE [dbo].[Course] SET ${paramVals} WHERE courseID = ${id}`);
+};
+
 module.exports = {
   getAll,
   findByID,
   findByTeacherID,
   findByParticipatedStudentID,
+  insert,
+  update,
   toRenderData
 };

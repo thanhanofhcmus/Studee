@@ -40,8 +40,8 @@
                     <div class="col-lg-12">
                       <div class="main-button-red mt-5 d-flex justify-content-around border-top">
                         <% if (isOwner) { %>
-                          <a href="/courses/edit">Sửa khóa học</a>
-                          <a href="/courses/delete/<%= course.id %>">Xóa khóa học</a>
+                          <a href="/courses/edit/<%= course.courseID %>">Sửa khóa học</a>
+                          <a href="/courses/delete/<%= course.courseID %>">Xóa khóa học</a>
                         <% } %>
                         <% if (loggedIn && !user.isTeacher) { %>
                           <a href="/courses/participate">Tham gia khóa học</a>

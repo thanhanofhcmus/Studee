@@ -30,11 +30,42 @@ const details = async (req, res) => {
 };
 
 const create = (req, res) => {
-  res.render('course/create', { teacher: null });
+  res.render('course/create', { somethingWrong: req.query.somethingWrong });
 };
 
 const createPost = async (req, res) => {
-  res.send('unimplemented');
+  const teacherID = res.locals.user.userID;
+  const course = { ...req.body, teacherID };
+  try {
+    await coursesModel.insert(course);
+    res.redirect(`/courses/list-of-user/${teacherID}`);
+  } catch (err) {
+    console.log(err);
+    res.redirect('/courses/create?somethingWrong');
+  }
+};
+
+const edit = async (req, res) => {
+  const id = req.params.id;
+  const course = (await coursesModel.findByID(id))[0];
+  const isValid = res.locals.loggedIn && res.locals.user.userID === course.teacherID;
+  res.render('course/edit', {
+    somethingWrong: req.query.somethingWrong,
+    course,
+    isValid
+  });
+};
+
+const editPost = async (req, res) => {
+  const id = req.params.id;
+  const course = req.body;
+  try {
+    await coursesModel.update(id, course);
+    res.redirect(`/courses/details/${id}`);
+  } catch (err) {
+    console.log(err);
+    res.redirect('/courses/edit/:id?somethingWrong');
+  }
 };
 
 module.exports = {
@@ -42,5 +73,7 @@ module.exports = {
   listOfUser,
   details,
   create,
-  createPost
+  createPost,
+  edit,
+  editPost
 };
