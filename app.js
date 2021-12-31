@@ -12,7 +12,6 @@ const userMiddleware = require('./middleware/user');
 const errorMiddleware = require('./middleware/error');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const courseRouter = require('./routes/course');
 const profileRouter = require('./routes/profile');
 const authRouter = require('./routes/auth');
@@ -43,7 +42,6 @@ app.use(expressValidator());
 app.use(userMiddleware);
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/courses', courseRouter);
 app.use('/profile', profileRouter);
 app.use('/auth', authRouter);
