@@ -58,6 +58,8 @@ const update = (id, course) => {
   return db.asyncExecuteSql(`UPDATE [dbo].[Course] SET ${paramVals} WHERE courseID = ${id}`);
 };
 
+const remove = id => db.asyncExecuteSql(`DELETE FROM [dbo].[Course] WHERE courseID = '${id}'`);
+
 module.exports = {
   getAll,
   findByID,
@@ -65,5 +67,6 @@ module.exports = {
   findByParticipatedStudentID,
   insert,
   update,
+  remove,
   toRenderData
 };
