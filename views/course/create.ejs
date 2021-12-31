@@ -21,50 +21,37 @@
             <div class="row">
               <div class="col-lg-12 text-center">
                 <h2>Tạo khóa học mới</h2>
+                <% if (typeof somethingWrong != 'undefined') { %><p class="text-danger pt-3">Có lỗi xảy ra, xin hãy thử lại</p><% } %>
               </div>
               <div class="col-lg-6">
                 <p class="fw-bold m-2">Tên khóa học</p>
-                <fieldset>
-                  <input name="courseName" type="text" id="courseName" placeholder="Khóa học" required>
-                </fieldset>
+                <fieldset><input name="courseName" type="text" placeholder="Khóa học" required></fieldset>
               </div>
               <div class="col-lg-6">
                 <p class="fw-bold m-2">Giá tiền</p>
-                <fieldset>
-                  <input name="price" type="number" id="price" min=0 required>
-                </fieldset>
+                <fieldset><input name="price" type="number" min=0 step="0.01" required></fieldset>
               </div>
               <div class="col-lg-4">
                 <p class="fw-bold m-2">Ngày bắt đầu</p>
-                <fieldset>
-                  <input name="startDate" type="datetime" id="startDate" required>
-                </fieldset>
+                <fieldset><input name="startDate" type="date"required></fieldset>
               </div>
               <div class="col-lg-4">
                 <p class="fw-bold m-2">Thời gian bắt đầu</p>
-                <fieldset>
-                  <input name="startTime" type="time" id="startTime" required>
-                </fieldset>
+                <fieldset><input name="startTime" type="time"required></fieldset>
               </div>
               <div class="col-lg-4">
                 <p class="fw-bold m-2">Thời gian kết thúc</p>
-                <fieldset>
-                  <input name="endTime" type="time" id="endTime" required>
-                </fieldset>
+                <fieldset><input name="endTime" type="time"required></fieldset>
               </div>
               
               <div class="col-lg-12">
                 <p class="fw-bold m-2">Mô tả khóa học</p>
                 <fieldset>
-                  <textarea name="desc" type="text" class="form-control" id="desc" placeholder="Giới thiệu về khóa học"
-                    required>
-                  </textarea>
+                  <textarea name="courseDesc" type="text" class="form-control"placeholder="Giới thiệu về khóa học" required></textarea>
                 </fieldset>
               </div>
               <div class="col-lg-12 d-flex justify-content-center">
-                <fieldset>
-                  <button type="submit" id="form-submit" class="button">Tọa khóa học</button>
-                </fieldset>
+                <fieldset><button type="submit" id="form-submit" class="button">Tọa khóa học</button></fieldset>
               </div>
             </div>
           </form>
@@ -81,7 +68,7 @@
           <form id="contact" action="/courses/create" method="post">
             <div class="row">
               <div class="col-lg-12 text-center">
-                <h2>Chỉ có giá viên mới có thể tạo khóa học</h2>
+                <h2>Chỉ có giáo viên mới có thể tạo khóa học</h2>
               </div>
               <div class="col-lg-12 d-flex justify-content-center">
                 <fieldset>

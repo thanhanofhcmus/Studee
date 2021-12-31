@@ -19,7 +19,7 @@
             <form id="contact" action="/profile/update" method="post">
               <div class="row d-flex justify-content-center">
                 <h2 class="mb-2 text-center">Chỉnh sửa hồ sơ cá nhân</h2>
-                <% if (typeof somethingWrong != 'undefined')    { %> <p class="text-danger pt-3">Có lỗi xảy ra, xin hãy thử lại</p> <% }%>
+                <% if (typeof somethingWrong != 'undefined') { %> <p class="text-danger pt-3">Có lỗi xảy ra, xin hãy thử lại</p> <% } %>
               </div>
               <div class="row">
                 <fieldset><input value="<%= user.lastName %>"    required name="lastName"    type="text"     placeholder="Họ"></fieldset>
