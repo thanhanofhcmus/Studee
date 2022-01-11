@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <%- include('./partials/meta'); %>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <%- include('./partials/meta'); %>
 
     <!-- import the webpage's javascript file -->
 
@@ -25,45 +26,43 @@
         text-transform: uppercase;
       }
     </style>
-    
-  </head>
-  <body>
-    <%- include('./partials/header'); %>
 
-  <section class="upcoming-meetings" id="meetings">
-    <div class="container">
-      <div class="row d-flex justify-content-around">
-        <div class="col-9">
+</head>
 
-          <span>{{roomId}} {{roomToken}}</span>
-          <div class="categories">
-            <div class="container has-text-centered" id="app">
-              <div>
-                <button v-if="!roomId" class='button red-button'  @click='createRoom'>Tạo Room</button>
-                <button v-if="!roomId" class='button red-button' @click='joinRoom'>Join Room</button>
-                <button v-if="roomId" class='button red-button' @click='publishVideo(true)'>Share Screen</button>
-                <div v-if="roomId">
-                  <p>Bạn có thể gởi link này để mời người khác <a v-bind:href="roomUrl" target="_blank">{{roomUrl}}</a></p>
-                  <p><strong>Room ID:</strong>{{roomId}}</p>
+<body>
+  <%- include('./partials/header'); %>
+
+    <section class="upcoming-meetings" id="meetings">
+      <div class="container">
+        <div class="row d-flex justify-content-around">
+          <div class="col-9">
+
+            <div class="categories">
+              <div class="container has-text-centered" id="app">
+                <div>
+                  <div class="d-flex justify-content-around">
+                    <button v-if="!roomId" class='button red-button' @click='createRoom'>Tạo Room</button>
+                    <button v-if="!roomId" class='button red-button' @click='joinRoom'>Join Room</button>
+                    <button v-if="roomId" class='button red-button' @click='publishVideo(true)'>Share Screen</button>
+                  </div>
+                  <div v-if="roomId">
+                    <p>Bạn có thể gởi link này để mời người khác <a v-bind:href="roomUrl"
+                        target="_blank">{{roomUrl}}</a></p>
+                    <p><strong>Room ID:</strong>{{roomId}}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-    
-
-  
-
-    <div class="container">
       <div id="videos"></div>
-    </div>
-  <%- include('./partials/footer'); %>
-  </body>
+    </section>
+i
+    <%- include('./partials/footer'); %>
+</body>
 
-  <script src="/assets/js/stringee-api.js"></script>
-  <script src="/assets/js/stringee-script.js"></script>
+<script src="/assets/js/stringee-api.js"></script>
+<script src="/assets/js/stringee-script.js"></script>
+
 </html>
