@@ -40,8 +40,8 @@
               <div class="container has-text-centered" id="app">
                 <div>
                   <div class="d-flex justify-content-around">
-                    <button v-if="!roomId" class='button red-button' @click='joinRoom'>Join Room</button>
-                    <button v-if="roomId" class='button red-button' @click='publishVideo(true)'>Share Screen</button>
+                    <button v-if="!roomId" class='button red-button' @click='joinRoom'>Vào phòng</button>
+                    <button v-if="roomId" class='button red-button' @click='publishVideo(true)'>Chia sẻ màn hình</button>
                   </div>
                   <div v-if="roomId">
                     <p>Bạn có thể gởi link này để mời người khác <a v-bind:href="roomUrl"

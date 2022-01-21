@@ -83,17 +83,6 @@ const vm = new Vue({
 
       room.publish(localTrack);
     },
-    createRoom: async function () {
-      console.log('Create Room');
-      const room = await api.createRoom();
-      const roomToken = await api.getRoomToken(room.roomId);
-
-      this.roomId = room.roomId;
-      this.roomToken = roomToken;
-
-      await this.login();
-      await this.publishVideo();
-    },
     joinRoom: async function (showPrompt = false) {
       if (showPrompt) {
         const roomId = prompt('Dán Room ID vào đây');

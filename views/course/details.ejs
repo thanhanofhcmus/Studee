@@ -27,7 +27,9 @@
                         <p><b>Bắt đầu:  </b><%= course.startDate.toString() %></p>
                         <p><b>Bắt đầu:  </b><%= course.formattedStartTime %></p>
                         <p><b>Kết thúc: </b><%= course.formattedEndTime %></p>
-                        <p><b>ID phòng học: </b><%= course.roomID %></p>
+                        <% if (isOwner || (loggedIn && !user.isTeacher && isInCourse)) { %>
+                          <p><b>ID phòng học: </b><%= course.roomID %></p>
+                        <% } %>
                       </div>
                     </div>
                     <div class="col-lg-6">
