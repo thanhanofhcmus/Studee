@@ -62,7 +62,11 @@ const update = (id, course) => {
   return db.asyncExecuteSql(`UPDATE [dbo].[Course] SET ${paramVals} WHERE courseID = ${id}`);
 };
 
-const remove = id => db.asyncExecuteSql(`DELETE FROM [dbo].[Course] WHERE courseID = '${id}'`);
+const remove = async id => {
+  const course = await findByID(id);
+  await stringee.removeRoom(course.roomID);
+  db.asyncExecuteSql(`DELETE FROM [dbo].[Course] WHERE courseID = '${id}'`);
+};
 
 module.exports = {
   getAll,
