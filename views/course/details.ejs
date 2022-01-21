@@ -27,6 +27,7 @@
                         <p><b>Bắt đầu:  </b><%= course.startDate.toString() %></p>
                         <p><b>Bắt đầu:  </b><%= course.formattedStartTime %></p>
                         <p><b>Kết thúc: </b><%= course.formattedEndTime %></p>
+                        <p><b>ID phòng học: </b><%= course.roomID %></p>
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -40,12 +41,14 @@
                     <div class="col-lg-12">
                       <div class="main-button-red mt-5 d-flex justify-content-around border-top">
                         <% if (isOwner) { %>
+                          <a href="/video-call?roomId=<%= course.roomID %>">Vào phòng học</a>
                           <a href="/courses/edit/<%= course.courseID %>">Sửa khóa học</a>
                           <a href="/courses/delete/<%= course.courseID %>">Xóa khóa học</a>
                         <% } %>
                         <% if (loggedIn && !user.isTeacher) { %>
                           <% if (isInCourse) { %>
                             <a href="/courses/leave/<%= course.courseID %>">Rời khỏi khóa học</a>
+                            <a href="/video-call?roomId=<%= course.roomID %>">Vào phòng học</a>
                           <% } else { %>
                             <a href="/courses/participate/<%= course.courseID %>">Tham gia khóa học</a>
                           <% } %>

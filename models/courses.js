@@ -1,4 +1,5 @@
 const db = require('./azure');
+const stringee = require('../models/stringee');
 
 const toRenderData = course => {
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -38,13 +39,16 @@ const findByParticipatedStudentID = id =>
   `)
     .then(mapCDS);
 
-const insert = course => {
-  const paramNames = ['teacherID', 'courseName', 'courseDesc', 'startDate', 'startTime', 'endTime', 'price'];
+const insert = async course => {
+  course.roomID = (await stringee.createRoom()).roomId;
+  const paramNames = ['teacherID', 'courseName', 'courseDesc', 'startDate', 'startTime', 'endTime', 'price', 'roomID'];
   const paramSubs = paramNames.join(', ');
   const paramVals = paramNames.map(s => {
     const v = course[s];
     return typeof v === 'string' ? `'${v}'` : v;
   }).join(', ');
+  console.log('insert course subs', paramSubs);
+  console.log('insert course vals', paramVals);
   return db.asyncExecuteSql(`INSERT INTO [dbo].[Course](${paramSubs}) VALUES (${paramVals})`);
 };
 

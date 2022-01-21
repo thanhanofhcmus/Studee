@@ -42,7 +42,7 @@ const createRoom = async () => {
 
 const listRoom = async () => (await axios.get(`${BASE_URL}/list`, { headers: AUTH_HEADER })).data.list;
 
-const removeRoom = async (roomId) => axios.put(`${BASE_URL}/delete`, { roomId }, { headers: AUTH_HEADER }).data;
+const removeRoom = async roomId => axios.put(`${BASE_URL}/delete`, { roomId }, { headers: AUTH_HEADER }).data;
 
 const removeAllRooms = async () => {
   const rooms = await listRoom();
