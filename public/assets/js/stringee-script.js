@@ -11,14 +11,16 @@ const vm = new Vue({
   },
   computed: {
     roomUrl: function () {
-      return `https://${location.hostname}?room=${this.roomId}`;
+      const port = location.port;
+      const portString = port ? `:${port}` : '';
+      return `http://${location.hostname}${portString}/video-call?roomId=${this.roomId}`;
     }
   },
   mounted() {
     api.setRestToken();
 
     const urlParams = new URLSearchParams(location.search);
-    const roomId = urlParams.get('room');
+    const roomId = urlParams.get('roomId');
 
     if (roomId) {
       this.roomId = roomId;
@@ -51,6 +53,7 @@ const vm = new Vue({
       });
 
       const videoElement = localTrack.attach();
+      videoElement.classList.add('col-12');
       videoContainer.appendChild(videoElement);
 
       const roomData = await StringeeVideo.joinRoom(this.client, this.roomToken);

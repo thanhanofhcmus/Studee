@@ -15,7 +15,7 @@ const indexRouter = require('./routes/index');
 const courseRouter = require('./routes/course');
 const profileRouter = require('./routes/profile');
 const authRouter = require('./routes/auth');
-const stringeeRouter = require('./routes/stringee');
+const videoCallRouter = require('./routes/video-call');
 
 const app = express();
 
@@ -45,7 +45,7 @@ app.use('/', indexRouter);
 app.use('/courses', courseRouter);
 app.use('/profile', profileRouter);
 app.use('/auth', authRouter);
-app.use('/stringee', stringeeRouter);
+app.use('/video-call', videoCallRouter);
 
 app.use(errorMiddleware.notFound);
 app.use(errorMiddleware.error);
