@@ -53,7 +53,10 @@ const vm = new Vue({
       });
 
       const videoElement = localTrack.attach();
-      videoElement.classList.add('col-12');
+      videoElement.classList.add('p-1');
+      videoElement.classList.add('border');
+      videoElement.classList.add('border-primary');
+      videoElement.classList.add('rounded');
       videoContainer.appendChild(videoElement);
 
       const roomData = await StringeeVideo.joinRoom(this.client, this.roomToken);
